@@ -28,7 +28,7 @@ WITH fact_sales_order_line__source AS (
   FROM fact_sales_order_line__rename_column
 )
 
-, calculate_fact_sales_order_line__cast_data_type AS (
+, fact_sales_order_line__calculate AS (
   SELECT
     sales_order_line_id
     , product_id
@@ -40,4 +40,4 @@ WITH fact_sales_order_line__source AS (
 
 SELECT
 *
-FROM calculate_fact_sales_order_line__cast_data_type
+FROM fact_sales_order_line__calculate
