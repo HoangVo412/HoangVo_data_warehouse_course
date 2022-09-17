@@ -16,7 +16,6 @@ WITH fact_sales_order_line__source AS (
     , stock_item_id AS product_id
     , quantity AS quantity
     , unit_price AS unit_price
-    , quantity * unit_price AS gross_amount
   FROM fact_sales_order_line__source
 )
 
@@ -26,10 +25,19 @@ WITH fact_sales_order_line__source AS (
     , CAST(product_id AS INTEGER) AS product_id
     , CAST(quantity AS NUMERIC) AS quantity
     , CAST(unit_price AS NUMERIC) AS unit_price 
-    , CAST(gross_amount AS NUMERIC) AS gross_amount
   FROM fact_sales_order_line__rename_column
+)
+
+, calculate_fact_sales_order_line__cast_data_type AS (
+  SELECT
+    sales_order_line_id
+    , product_id
+    , quantity
+    , unit_price
+    , quantity * unit_price AS gross_amount
+  FROM fact_sales_order_line__cast_data_type
 )
 
 SELECT
 *
-FROM fact_sales_order_line__cast_data_type
+FROM calculate_fact_sales_order_line__cast_data_type
