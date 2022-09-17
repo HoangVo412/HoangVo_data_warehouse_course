@@ -4,12 +4,32 @@ Yêu cầu #0105b:
 
 #}
 
+WITH fact_sales_order_line__source AS (
+  SELECT
+  *
+  FROM `duckdata-320210.wide_world_importers.sales__order_lines`
+)
 
+, fact_sales_order_line__rename_column AS(
+  SELECT
+    order_line_id AS sales_order_line_id
+    , stock_item_id AS product_id
+    , quantity AS quantity
+    , unit_price AS unit_price
+    , quantity * unit_price AS gross_amount
+  FROM fact_sales_order_line__source
+)
 
-SELECT 
-  CAST(order_line_id AS INTEGER) AS sales_order_line_id
-  , CAST(stock_item_id AS INTEGER) AS product_id
-  , CAST(quantity AS NUMERIC) AS quantity 
-  , CAST(unit_price AS NUMERIC) AS unit_price
-  , CAST(quantity AS NUMERIC) * CAST(unit_price AS NUMERIC) AS gross_amount
-FROM `duckdata-320210.wide_world_importers.sales__order_lines`
+, fact_sales_order_line__cast_data_type AS (
+  SELECT
+    CAST(sales_order_line_id AS INTEGER) AS sales_order_line_id
+    , CAST(product_id AS INTEGER) AS product_id
+    , CAST(quantity AS NUMERIC) AS quantity
+    , CAST(unit_price AS NUMERIC) AS unit_price 
+    , CAST(gross_amount AS NUMERIC) AS gross_amount
+  FROM fact_sales_order_line__rename_column
+)
+
+SELECT
+*
+FROM fact_sales_order_line__cast_data_type
