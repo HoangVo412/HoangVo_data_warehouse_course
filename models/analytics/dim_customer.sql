@@ -6,7 +6,19 @@ Yêu cầu #0106b:
 #}
 
 
+WITH dim_customer__source AS (
+  SELECT 
+    *
+  FROM `duckdata-320210.wide_world_importers.sales__customers`
+)
+
+, dim_customer__cast_type AS (
+  SELECt
+    CAST(customer_id AS INTEGER) AS customer_id
+    , CAST(customer_name AS STRING) AS customer_name
+  FROM dim_customer__source
+)
 
 SELECT 
   *
-FROM `duckdata-320210.wide_world_importers.sales__customers`
+FROM dim_customer__cast_type
