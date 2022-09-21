@@ -37,8 +37,9 @@ SELECT
   , dim_supplier.supplier_name
   , 
   CASE
-  WHEN dim_product.is_chiller_stock IS TRUE THEN 'This stock item needs to be in a chiller'
-  WHEN dim_product.is_chiller_stock IS FALSE THEN 'This stock item does not need to be in a chiller'
+  WHEN dim_product.is_chiller_stock IS TRUE THEN 'Chiller Stock'
+  WHEN dim_product.is_chiller_stock IS FALSE THEN 'Not Chiller Stock'
+  ELSE 'Unknown'
   END AS is_chiller_stock
 FROM dim_product__cast_type AS dim_product
 LEFT JOIN {{ref('dim_supplier')}}
