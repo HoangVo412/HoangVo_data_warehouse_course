@@ -24,7 +24,8 @@ WITH fact_sales_order_line__source AS (
 
 , fact_sales_order_line__rename_column AS (
   SELECT 
-    order_line_id AS sales_order_line_id
+    order_id AS sale_order_id
+    , order_line_id AS sales_order_line_id
     , stock_item_id AS product_id
     , quantity 
     , unit_price
@@ -33,7 +34,8 @@ WITH fact_sales_order_line__source AS (
 
 , fact_sales_order_line__cast_type AS (
   SELECT 
-    CAST(sales_order_line_id AS INTEGER) AS sales_order_line_id
+    CAST(sale_order_id AS INTEGER) AS sale_order_id
+    , CAST(sales_order_line_id AS INTEGER) AS sales_order_line_id
     , CAST(product_id AS INTEGER) AS product_id
     , CAST(quantity AS NUMERIC) AS quantity 
     , CAST(unit_price AS NUMERIC) AS unit_price
@@ -48,10 +50,15 @@ WITH fact_sales_order_line__source AS (
 )
 
 SELECT 
-  sales_order_line_id
+  sale_order_id
+  , sales_order_line_id
   , product_id
   , quantity 
   , unit_price
   , gross_amount
+  , fact_sales_order.customer_id
 FROM fact_sales_order_line__calculate_fact
+LEFT JOIN {{ ref('fact_sales_order') }}
+AS fact_sales_order
+ON fact_sales_order_line__calculate_fact.sale_order_id = fact_sales_order.order_id
 
