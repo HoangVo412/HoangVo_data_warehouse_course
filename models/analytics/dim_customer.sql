@@ -21,11 +21,8 @@ WITH dim_customer__source AS (
     CAST(customer_id AS INTEGER) AS customer_id
     , CAST(customer_name AS STRING) AS customer_name
     , CAST(customer_category_id AS INTEGER) AS customer_category_id
-    , CAST(customer_category_name AS STRING) AS customer_category_name
     , CAST(buying_group_id AS INTEGER) AS buying_group_id
-    , CAST(buying_group_name AS STRING) AS buying_group_name
     , CAST(delivery_method_id AS INTEGER) AS delivery_method_id
-    , CAST(delivery_method_name AS STRING) AS delivery_method_name
   FROM dim_customer__source
 )
 
