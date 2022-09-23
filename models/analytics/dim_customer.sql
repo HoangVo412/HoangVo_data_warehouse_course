@@ -33,11 +33,15 @@ SELECT
   dim_customer.customer_id
   , dim_customer.customer_name
   , dim_customer.customer_category_id
-  , 
+  , stg_fact_customer_categories.customer_category_name
   , dim_customer.buying_group_id
-  , 
+  , stg_fact_buying_groups.buying_group_name
   , dim_customer.delivery_method_id
-  ,
+  , stg_fact_delivery_methods.delivery_method_name
 FROM dim_customer__cast_type AS dim_customer
-LEFT JOIN {{'stg_fact_customer_categories'}} AS fact_customer_categories
-ON dim_customer.customer_category_id 
+LEFT JOIN {{ref('stg_fact_customer_categories')}} AS stg_fact_customer_categories
+  ON dim_customer.customer_category_id  = stg_fact_customer_categories.customer_category_id
+LEFT JOIN {{ref('stg_fact_buying_groups')}} AS stg_fact_buying_groups
+  ON dim_customer.buying_group_id = stg_fact_buying_groups.buying_group_id
+LEFT JOIN {{ ref('stg_fact_delivery_methods') }} AS stg_fact_delivery_methods
+  ON dim_customer.delivery_method_id = stg_fact_delivery_methods.delivery_method_id
