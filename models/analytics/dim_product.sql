@@ -58,7 +58,7 @@ SELECT
   , dim_product.brand_name
   , dim_product.is_chiller_stock
   , dim_product.supplier_id
-  , dim_supplier.supplier_name
+  , COALESCE(dim_supplier.supplier_name, 'Undefined') AS supplier_name
 FROM dim_product__convert_null AS dim_product
 LEFT JOIN {{ ref('dim_supplier') }}
   ON dim_product.supplier_id = dim_supplier.supplier_id
