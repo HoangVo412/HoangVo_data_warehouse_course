@@ -6,9 +6,9 @@ WITH fact_sales_order_line__source AS(
 , fact_sales_order_line__rename_column AS (
   SELECT
     order_line_id AS sales_order_line_id
+    , stock_item_id AS product_id
     , quantity AS quantity
     , unit_price AS unit_price
-    , stock_item_id AS product_id
   FROM fact_sales_order_line__source
 )
 
