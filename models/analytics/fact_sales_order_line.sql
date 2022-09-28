@@ -11,5 +11,12 @@ WITH fact_sales_order_line__source AS(
   FROM fact_sales_order_line__source
 )
 
+, fact_sales_order_line__calculate AS (
+  SELECT
+    *
+    , quantity * unit_price AS gross_amount
+  FROM fact_sales_order_line__rename_column
+)
+
 SELECT * 
-FROM fact_sales_order_line__rename_column
+FROM fact_sales_order_line__calculate
