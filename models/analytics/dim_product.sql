@@ -26,7 +26,7 @@ SELECT
   , dim_product.product_name
   , dim_product.brand_name
   , dim_product.supplier_id
-  , dim_suppliers.supplier_name
+  , dim_supplier.supplier_name
 FROM dim_product__cast_type AS dim_product
-LEFT JOIN {{ref('dim_suppliers')}} AS dim_suppliers
-ON dim_product.supplier_id = dim_suppliers.supplier_id
+LEFT JOIN {{ref('dim_supplier')}} AS dim_supplier
+ON dim_product.supplier_id = dim_supplier.supplier_id
