@@ -9,6 +9,7 @@ WITH dim_product__source AS (
     , stock_item_name AS product_name
     , brand AS brand_name
     , supplier_id AS supplier_id
+    , is_chiller_stock AS is_chiller_stock
   FROM dim_product__source
 )
 
@@ -18,6 +19,7 @@ WITH dim_product__source AS (
     , CAST(product_name AS STRING) AS product_name
     , CAST(brand_name AS STRING) AS brand_name
     , CAST(supplier_id AS INTEGER) AS supplier_id
+    , CAST(is_chiller_stock AS BOOL) AS chiller_stock
   FROM dim_product__rename_column
 )
 
