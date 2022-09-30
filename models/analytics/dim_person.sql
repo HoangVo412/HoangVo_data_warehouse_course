@@ -19,3 +19,7 @@ WITH dim_person__source AS (
 SELECT
   *
 FROM dim_person__cast_type
+UNION ALL
+SELECT
+  0 AS person_id
+  , 'No data' AS person_full_name
