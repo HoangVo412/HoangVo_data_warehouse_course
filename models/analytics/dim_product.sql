@@ -27,9 +27,9 @@ WITH dim_product__source AS (
   SELECT
     *
     , CASE
-      WHEN is_chiller_stock_boolean IS TRUE THEN 'Chiller stock'
-      WHEN is_chiller_stock_boolean IS FALSE THEN 'Not chiller stock'
-      ELSE 'Undefined'
+        WHEN is_chiller_stock_boolean IS TRUE THEN 'Chiller stock'
+        WHEN is_chiller_stock_boolean IS FALSE THEN 'Not chiller stock'
+        ELSE 'Undefined'
       END AS is_chiller_stock
   FROM dim_product__cast_type
 )
