@@ -31,13 +31,14 @@ WITH fact_sales_order_line__source AS(
 )
 
 SELECT 
-  sales_order_line_id
-  , order_id
-  , product_id
-  , quantity
-  , unit_price
-  , gross_amount
+  fact_sales_order_line.sales_order_line_id
+  , fact_sales_order_line.order_id
+  , fact_sales_order_line.product_id
+  , fact_sales_order_line.quantity
+  , fact_sales_order_line.unit_price
+  , fact_sales_order_line.gross_amount
   , stg_fact_sales_order.customer_id
-FROM fact_sales_order_line__calculate
+  , stg_fact_sales_order.picked_by_person_id
+FROM fact_sales_order_line__calculate AS fact_sales_order_line
 LEFT JOIN {{ref('stg_fact_sales_order')}} AS stg_fact_sales_order
-ON fact_sales_order_line__calculate.order_id = stg_fact_sales_order.sales_order_id
+ON fact_sales_order_line.order_id = stg_fact_sales_order.sales_order_id
