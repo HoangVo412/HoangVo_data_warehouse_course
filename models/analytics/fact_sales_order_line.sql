@@ -62,6 +62,7 @@ SELECT
   , fact_line.gross_amount
   , fact_line.last_edited_when
   , fact_header.sales__orders__last_edited_when
+  , fact_header.salesperson_person_id AS salesperson_person_id
 FROM fact_sales_order_line__calculate_fact AS fact_line
 LEFT JOIN {{ ref('stg_fact_sales_order') }} AS fact_header
   ON fact_line.sales_order_id = fact_header.sales_order_id
