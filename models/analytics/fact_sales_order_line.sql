@@ -59,11 +59,13 @@ SELECT
   , fact_line.quantity 
   , fact_line.unit_price
   , fact_line.gross_amount
-  , fact_line.last_edited_when
+  , fact_line.last_edited_when 
+  , fact_header.last_edited_when AS last_edited_when_sales_order
 FROM fact_sales_order_line__calculate_fact AS fact_line
 LEFT JOIN {{ ref('stg_fact_sales_order') }} AS fact_header
   ON fact_line.sales_order_id = fact_header.sales_order_id
 
 {% if is_incremental() %}
   WHERE fact_line.last_edited_when >= (SELECT MAX(last_edited_when) FROM {{ this }})
+  OR fact_header.last_edited_when_sales_order >= (SELECT MAX(last_edited_when_sales_order) FROM {{this}})
 {% endif %}
