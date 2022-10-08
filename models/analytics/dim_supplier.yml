@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: dim_supplier
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: "`duckdata-320210.wide_world_importers.purchasing__suppliers`"
     columns:
       - name: supplier_id
         tests:
