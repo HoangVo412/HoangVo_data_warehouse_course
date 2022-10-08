@@ -6,6 +6,7 @@ models:
       - name: sales_order_line_id
         tests:
           - not_null
+          - unique
 
       - name: sales_order_id
         tests:
