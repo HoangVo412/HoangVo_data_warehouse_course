@@ -39,6 +39,7 @@ SELECT
   , fact_sales_order_line.gross_amount
   , stg_fact_sales_order.customer_id
   , COALESCE(stg_fact_sales_order.picked_by_person_id, 0) AS picked_by_person_id
+  , stg_fact_sales_order.order_date
 FROM fact_sales_order_line__calculate AS fact_sales_order_line
 LEFT JOIN {{ref('stg_fact_sales_order')}} AS stg_fact_sales_order
 ON fact_sales_order_line.order_id = stg_fact_sales_order.sales_order_id
