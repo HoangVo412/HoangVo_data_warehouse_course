@@ -34,12 +34,22 @@ WITH dim_product__source AS (
   FROM dim_product__cast_type
 )
 
+, dim_product__add_category AS (
+  SELECT
+    CAST(stock_item_id AS INTEGER) AS product_id
+    , CAST(category_id AS INTEGER) AS category_id
+  FROM `duckdata-320210.wide_world_importers.external__stock_item_categories`
+)
+
 SELECT 
   dim_product.product_id
   , dim_product.product_name
   , dim_product.brand_name
   , dim_product.supplier_id
   , COALESCE(dim_supplier.supplier_name, 'No data') AS supplier_name
+  , dim_product__add_category.category_id
 FROM dim_product__convert_boolean AS dim_product
 LEFT JOIN {{ref('dim_supplier')}} AS dim_supplier
-ON dim_product.supplier_id = dim_supplier.supplier_id
+  ON dim_product.supplier_id = dim_supplier.supplier_id
+LEFT JOIN dim_product__add_category
+  ON dim_product.product_id = dim_product__add_category.product_id
