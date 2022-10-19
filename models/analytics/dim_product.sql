@@ -36,9 +36,12 @@ WITH dim_product__source AS (
 
 , dim_product__add_category AS (
   SELECT
-    CAST(stock_item_id AS INTEGER) AS product_id
-    , CAST(category_id AS INTEGER) AS category_id
-  FROM `duckdata-320210.wide_world_importers.external__stock_item_categories`
+    CAST(dim_product__add_category_id.stock_item_id AS INTEGER) AS product_id
+    , CAST(dim_product__add_category_id.category_id AS INTEGER) AS category_id
+    , CAST(dim_product__add_category_name.category_name AS STRING) AS category_name
+  FROM `duckdata-320210.wide_world_importers.external__stock_item_categories` AS dim_product__add_category_id
+  LEFT JOIN `duckdata-320210.wide_world_importers.external__categories` AS dim_product__add_category_name
+    ON dim_product__add_category_id.category_id = dim_product__add_category_name.category_id
 )
 
 SELECT 
@@ -48,6 +51,7 @@ SELECT
   , dim_product.supplier_id
   , COALESCE(dim_supplier.supplier_name, 'No data') AS supplier_name
   , dim_product__add_category.category_id
+  , dim_product__add_category.category_name
 FROM dim_product__convert_boolean AS dim_product
 LEFT JOIN {{ref('dim_supplier')}} AS dim_supplier
   ON dim_product.supplier_id = dim_supplier.supplier_id
