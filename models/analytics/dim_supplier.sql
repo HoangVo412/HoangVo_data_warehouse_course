@@ -10,5 +10,7 @@ WITH dim_supplier__source AS (
   FROM dim_supplier__source
 )
 
-SELECT *
+SELECT 
+  supplier_id
+  , supplier_name
 FROM dim_supplier__cast_type
