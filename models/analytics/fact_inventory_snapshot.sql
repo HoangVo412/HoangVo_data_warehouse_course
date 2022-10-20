@@ -3,7 +3,7 @@ WITH fact_inventory_snapshot__net_change_quantity AS (
     CAST(DATE_TRUNC(transaction_occurred_when, MONTH) AS DATE) AS year_month
     , product_id 
     , SUM(quantity) AS net_change_quantity
-  FROM `main-363923.wide_world_importers_dwh.fact_stock_item_transaction`
+  FROM `main-363923.wide_world_importers_dwh.fact_inventory_transaction`
   GROUP BY year_month, product_id
 )
 
@@ -21,7 +21,7 @@ WITH fact_inventory_snapshot__net_change_quantity AS (
     year_month
     , product_id
   FROM `main-363923.wide_world_importers_dwh.dim_date`
-  CROSS JOIN `main-363923.wide_world_importers_dwh.fact_stock_item_transaction`
+  CROSS JOIN `main-363923.wide_world_importers_dwh.fact_inventory_transaction`
 )
 
 , fact_inventory_snapshot__handle_null AS (
